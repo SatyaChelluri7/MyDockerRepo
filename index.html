@@ -1,23 +1,105 @@
-<html>
-  <head>
-    <title>Div Align Attribbute</title>
-  </head>
-  <body>
-    <div align="left">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua.
-    </div>
-    <div align="right">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua.
-    </div>
-    <div align="center">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua.
-    </div>
-    <div align="justify">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua.
-    </div>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Quiz</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="quiz-styles.css">
+</head>
+<body>
+
+<div class="container mt-5">
+  <div id="quiz-container" class="text-center">
+      <h1 id="question">Question Text</h1>
+      <div id="options" class="my-4">
+          <!-- Options will be populated here by JavaScript -->
+      </div>
+      <button id="next-button" class="btn btn-primary">Next Question</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="quiz-scripts.js"></script>
+  <style>
+    body {
+  background-color: #f8f9fa;
+}
+
+#quiz-container {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#question {
+  font-size: 24px;
+}
+
+#options .btn-option {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+#next-button {
+  margin-top: 20px;
+}
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+  const questionElement = document.getElementById('question');
+  const optionsElement = document.getElementById('options');
+  const nextButton = document.getElementById('next-button');
+  let currentQuestionIndex = 0;
+
+  const questions = [
+      {
+          question: "What is the capital of France?",
+          options: ["New York", "London", "Paris", "Dubai"],
+          answer: "Paris"
+      },
+      // More questions...
+  ];
+
+  function loadQuestion(questionIndex) {
+      const question = questions[questionIndex];
+      questionElement.textContent = question.question;
+      optionsElement.innerHTML = '';
+      question.options.forEach(option => {
+          const button = document.createElement('button');
+          button.textContent = option;
+          button.classList.add('btn', 'btn-option');
+          button.onclick = () => selectOption(option);
+          optionsElement.appendChild(button);
+      });
+  }
+
+  function selectOption(selected) {
+      const question = questions[currentQuestionIndex];
+      if (selected === question.answer) {
+          alert('Correct!');
+      } else {
+          alert('Wrong!');
+      }
+  }
+
+  nextButton.addEventListener('click', () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+          loadQuestion(currentQuestionIndex);
+      } else {
+          alert('Quiz completed!');
+          currentQuestionIndex = 0;
+      }
+      loadQuestion(currentQuestionIndex);
+  });
+
+  // Load the first question
+  loadQuestion(currentQuestionIndex);
+});
+  </script>
+</body>
 </html>
